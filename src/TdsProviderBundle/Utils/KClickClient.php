@@ -254,7 +254,7 @@ class KClickClient
             return;
         }
         if (!headers_sent()) {
-            setcookie($key, $value, $this->_getCookiesExpireTimestamp($ttl), '/', $this->_getCookieHost());
+            setcookie($key, $value, $this->_getCookiesExpireTimestamp($ttl), '/', $this->_getCookieHost() ?? '');
         }
         $_COOKIE[$key] = $value;
     }
