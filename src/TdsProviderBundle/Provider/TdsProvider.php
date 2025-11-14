@@ -78,6 +78,7 @@ class TdsProvider
         $this->client->param('sub_id_6', $request->cookies->get('reflink_click_timestamp', ''));
         $customer = json_decode($request->cookies->get('customer', '{}'), true);
         $this->client->param('sub_id_7', $customer['uid'] ?? '');
+        $this->client->param('sub_id_8', $request->getBaseUrl().$request->getPathInfo());
 
         $this->client->keyword($keyword);
 
