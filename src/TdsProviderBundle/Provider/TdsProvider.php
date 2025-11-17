@@ -70,7 +70,7 @@ class TdsProvider
         $this->client->param('sub_id_1', $type);
         $this->client->param('sub_id_2', $request->cookies->get('_ga', ''));
         $this->client->param('sub_id_3', $request->cookies->get('ref', ''));
-        $this->client->param('sub_id_4', $request->cookies->get('landing_page', ''));
+        $this->client->param('sub_id_4', $cookieLandingPage);
         $this->client->param(
             'sub_id_5',
             $cookieLandingPage ? UrlUtils::getUrlPathFromUrl($cookieLandingPage) : $cookieLandingPage
@@ -78,7 +78,7 @@ class TdsProvider
         $this->client->param('sub_id_6', $request->cookies->get('reflink_click_timestamp', ''));
         $customer = json_decode($request->cookies->get('customer', '{}'), true);
         $this->client->param('sub_id_7', $customer['uid'] ?? '');
-        $this->client->param('sub_id_8', $request->getBaseUrl().$request->getPathInfo());
+        $this->client->param('sub_id_8', $request->cookies->get('source_url', ''));
 
         $this->client->keyword($keyword);
 
