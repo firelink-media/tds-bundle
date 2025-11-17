@@ -15,13 +15,17 @@ class SourceUrlCookieSetterSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $cookie = new Cookie(
-            'source_url',
-            $event->getRequest()->getBaseUrl() . $event->getRequest()->getPathInfo(),
-            (new \DateTimeImmutable())->modify('+2year')
-        );
+        $referer = $event->getRequest()->headers->get('referer');
 
-        $event->getResponse()->headers->setCookie($cookie);
+        if ($referer) {
+            $cookie = new Cookie(
+                'source_url',
+                $referer,
+                (new \DateTimeImmutable())->modify('+2 years')
+            );
+
+            $event->getResponse()->headers->setCookie($cookie);
+        }
     }
 
     public static function getSubscribedEvents(): array
