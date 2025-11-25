@@ -78,7 +78,7 @@ class TdsProvider
         $this->client->param('sub_id_6', $request->cookies->get('reflink_click_timestamp', ''));
         $customer = json_decode($request->cookies->get('customer', '{}'), true);
         $this->client->param('sub_id_7', $customer['uid'] ?? '');
-        $this->client->param('sub_id_8', $request->query->get('referer') ?? $request->headers->get('referer', ''));
+        $this->client->param('sub_id_8', $this->getReferer($request));
 
         $this->client->keyword($keyword);
 
@@ -120,5 +120,17 @@ class TdsProvider
                 break;
             }
         }
+    }
+
+    private function getReferer(Request $request): string
+    {
+        if (!$result = $request->query->get('referer') ?? $request->headers->get('referer', '')) {
+            return '';
+        }
+
+        $result = explode('?', $result)[0];
+        $result = explode('#', $result)[0];
+
+        return $result;
     }
 }
