@@ -79,6 +79,7 @@ class TdsProvider
         $customer = json_decode($request->cookies->get('customer', '{}'), true);
         $this->client->param('sub_id_7', $customer['uid'] ?? '');
         $this->client->param('sub_id_8', $this->getReferer($request));
+        $this->client->param('sub_id_9', $request->cookies->get('track_uid', ''));
 
         $this->client->keyword($keyword);
 
